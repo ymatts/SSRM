@@ -1,0 +1,11 @@
+Package: SSRM
+Type: Package
+Title: Structural Social Role Mining for Dynamic Social Networks
+Version: 0.1
+Date: 2016-07-11
+Authors@R: person("Yu", "Hatakeyama", role = c("aut", "cre"), email = "hatakeyama.yuu at j.mbox.nagoya-u.ac.jp")
+Maintainer: Yu Hatakeyama <hatakeyama.yuu at j.mbox.nagoya-u.ac.jp>
+Description: Implementation of SSRM: Structural Social Role Mining for Dynamic Social Networks
+License: MIT
+URL: https://github.com/hatayou/SSRM.git
+LazyData: TRUE
