@@ -1,5 +1,15 @@
+#' Calculating LBC
+#' 
+#' @name lbc
+#' @param igraph object
+#' @return result
+#' library(SSRM)
+#' @author Yu Hatakeyama
+#' @export
+#' 
+
 # 要見直し
-LBC <- function(graph, community, nodename=NULL) {
+lbc <- function(graph, community, nodename=NULL) {
   #CBC・LBCとの共通部分###########################################################
   short.path.mat <- shortest.paths(graph)
   all.node.comb.bi <- apply(short.path.mat, 1, function(x){ifelse(x != 0, 1, 0)})

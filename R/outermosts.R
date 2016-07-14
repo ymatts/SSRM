@@ -1,3 +1,13 @@
+#' Calculating Outermosts
+#' 
+#' @name outermosts
+#' @param igraph object
+#' @return result
+#' library(SSRM)
+#' @author Yu Hatakeyama
+#' @export
+#' 
+
 #outermostsに属するノード(近接中心性に関する頻度が正規分布であると仮定したときの下2sigma範囲外)
 outermosts <- function(graph, visualize=T) {
   center <- closeness(graph, mode="all", normalized=T)

@@ -1,3 +1,13 @@
+#' Calculating ds_count
+#'
+#' @name ds_count
+#' @param igraph object
+#' @return result
+#' library(SSRM)
+#' @author Yu Hatakeyama
+#' @export
+#'
+
 # 完成?
 ds_count <- function(graph, community, nodename=NULL) {
 

@@ -1,4 +1,15 @@
-med_extractor <- function(mediacy_score_nodes, community) {
+#' Calculating med_extractor
+#'
+#' @name mediator
+#' @param igraph object
+#' @return result
+#' library(SSRM)
+#' @author Yu Hatakeyama
+#' @export
+#'
+
+
+mediator <- function(mediacy_score_nodes, community) {
   com.name.memb <- membership(community)
   all.com <- sort(unique(wc$membership))
 
