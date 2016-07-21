@@ -3,7 +3,6 @@
 #' @name SSRM Class
 #' @param igraph object
 #' @return result
-#' library(SSRM)
 #' @author Yu Hatakeyama
 #' @export
 #'
@@ -71,6 +70,10 @@ SSRM <- R6::R6Class("SSRM",
   nbc = function(nodename) {
     result <- self$dispatcher("nbc", nodename)
     return(result)
+  },
+
+  save_igraph = function(file_name=NULL, format="gexf", save_dir=NULL) {
+    SSRM::save_igraph(self$graph, file_name, format, save_dir)
   }
   )
 )

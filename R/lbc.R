@@ -1,12 +1,11 @@
 #' Calculating LBC
-#' 
+#'
 #' @name lbc
 #' @param igraph object
 #' @return result
-#' library(SSRM)
 #' @author Yu Hatakeyama
 #' @export
-#' 
+#'
 
 # 要見直し
 lbc <- function(graph, community, nodename=NULL) {

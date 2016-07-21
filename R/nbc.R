@@ -1,12 +1,11 @@
 #' Calculating NBC
-#' 
+#'
 #' @name nbc
 #' @param igraph object
 #' @return result
-#' library(SSRM)
 #' @author Yu Hatakeyama
 #' @export
-#' 
+#'
 
 nbc <- function(graph, community, nodename=NULL) {
   #CBC・LBCとの共通部分###########################################################

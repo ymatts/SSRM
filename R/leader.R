@@ -3,7 +3,6 @@
 #' @name leader
 #' @param igraph object
 #' @return result
-#' library(SSRM)
 #' @author Yu Hatakeyama
 #' @export
 #'

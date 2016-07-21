@@ -3,7 +3,6 @@
 #' @name mediacy_score
 #' @param igraph object
 #' @return result
-#' library(SSRM)
 #' @author Yu Hatakeyama
 #' @export
 #'
