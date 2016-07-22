@@ -20,8 +20,14 @@ lbc <- function(graph, community, nodename=NULL) {
     all.node.comb.dist.sum[elem] <- 0
   }
 
-  leader.names <- names(leader(graph, visualize=F))
-  leader.comb.names <- combinations(length(leader.names), 2, leader.names)
+  leader.names <- names(SSRM::leader(graph, visualize=F))
+  leader.num <- length(leader.names)
+
+  if (leader.num == 0) {
+    stop("Leaders don't exist.")
+  }
+
+  leader.comb.names <- combinations(leader.num, 2, leader.names)
   leaders.path <- apply(leader.comb.names, 1, function(x){get.all.shortest.paths(graph, x[[1]], x[[2]])$res})
 
   all.nodes <- as_ids(V(graph))

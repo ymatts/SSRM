@@ -10,8 +10,5 @@ Description: Implementation of SSRM: Structural Social Role Mining for Dynamic
 License: MIT + file LICENSE
 URL: https://github.com/hatayou/SSRM.git
 LazyData: TRUE
-Imports:
-    R6, igraph, gtools, ggplot2, KernSmooth
-Suggests:
-	rgexf    
+Depends: R6, igraph, gtools, ggplot2, grDevices, KernSmooth, rgexf
 RoxygenNote: 5.0.1

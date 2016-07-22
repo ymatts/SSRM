@@ -18,17 +18,6 @@ cc.df <- cc.df[!is.na(cc.df[,3]),]
 cc.df.sig <- cc.df[abs(cc.df[,3]) > 0.75,]
 g <- graph.data.frame(cc.df.sig[, 1:2], directed=F)
 
-# グラフ描画パラメーターの調整
-num.of.v <- length(V(g))
-V(g)$size  <- rep(5, num.of.v)
-V(g)$color <- rep("#E41A1C", num.of.v)
-V(g)$shape <- rep("circle", num.of.v)
-V(g)$label <- names(as.list(V(g)))
-V(g)$label.cex   <- rep(0.5, num.of.v)
-V(g)$label.color <- rep("black", num.of.v)
-
-plot(g)
-
 #sc <- spinglass.community(g)
 wc <- walktrap.community(g)
 dend <- as.dendrogram(wc)
@@ -66,19 +55,3 @@ for (i in 1:length(dcg)) {
 }
 
 colnames(sp.df.all) <- c("CommunityNumber", "NodeName", "Community") # 列名変更
-
-
-#######################
-
-
-# サンプルデータの用意
-g.sample <- graph.full(5) %du% graph.full(5) %du% graph.full(5)  # 完全グラフを3つ作る
-g.sample <- add.edges(g.sample, c(1, 6, 1, 11, 6, 11))  # ノード1,6間、1,11間、6,11間にエッジを追加する
-plot(g.sample, layout = layout.lgl)  # プロットする
-
-
-
-memb <- community.to.membership(g.sample, fc$merges, steps = which.max(fc$modularity) - 1)
-V(g.sample)$color <- rainbow(length(memb$csize))[memb$membership + 1]
-plot(g.sample, layout = layout.fruchterman.reingold, edge.arrow.size = 0.5)
-
