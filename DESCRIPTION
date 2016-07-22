@@ -11,9 +11,7 @@ License: MIT + file LICENSE
 URL: https://github.com/hatayou/SSRM.git
 LazyData: TRUE
 Imports:
-    R6,
-    igraph,
-    KernSmooth
+    R6, igraph, gtools, ggplot2, KernSmooth
 Suggests:
 	rgexf    
 RoxygenNote: 5.0.1

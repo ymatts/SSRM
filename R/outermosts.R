@@ -12,7 +12,9 @@ outermosts <- function(graph, visualize=T) {
   center <- closeness(graph, mode="all", normalized=T)
   result <- center[center < (mean(center) - 2*sd(center))]
 
-  if (visualize) {visualize.func(graph)}
+  if (visualize) {
+    SSRM$.visualize_func(graph)
+    }
 
   return(result)
 }

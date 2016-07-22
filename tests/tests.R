@@ -1,6 +1,9 @@
 #サンプルデータ準備
+
+library(SSRM)
 library(igraph)
 library(reshape2)
+
 counts <- read.table("http://bowtie-bio.sourceforge.net/recount/countTables/wang_count_table.txt", row.names=1, header=TRUE)
 counts <- counts[rank(- rowMeans(counts)) <= 100,]
 counts.log <- log10(counts + 1)
@@ -31,8 +34,17 @@ wc <- walktrap.community(g)
 dend <- as.dendrogram(wc)
 plot(dend)
 
-source("./R/nbc.R")
 
-outsider.node <- outsider(g, wc)
-cbc.sample.node <- CBC(g, "ENSG00000007237")
-lbc.sample.node <- LBC(g, "ENSG00000007237")
+# SSRM package test
+g.obj <- SSRM$new(g, wc)
+
+g.obj$outsider()
+g.obj$leader()
+g.obj$outermosts()
+g.obj$mediator()
+g.obj$cbc()
+
+#g.obj$lbc()
+
+g.obj$ds_count()
+g.obj$nbc()

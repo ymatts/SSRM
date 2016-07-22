@@ -13,7 +13,7 @@ leader <- function(graph, visualize=T) {
   result <- center[center > (mean(center) + 2*sd(center))]
 
   if (visualize) {
-    visualize.func(graph)
+    SSRM$.visualize_func(graph)
     }
 
   return(result)
