@@ -37,6 +37,7 @@ plot(dend)
 
 # SSRM package test
 g.obj <- SSRM$new(g, wc)
+g.obj$plot_community()
 
 g.obj$outsider()
 g.obj$leader()
@@ -48,8 +49,7 @@ g.obj$ds_count()
 g.obj$nbc()
 #g.obj$save_igraph(file="test.gexf")
 
-#######
-
+#########
 #http://deta.hateblo.jp/entry/2013/05/08/053707
 g <- simplify(g, remove.multiple=TRUE, remove.loops=TRUE)
 dcg <- decompose.graph(g)
@@ -66,3 +66,19 @@ for (i in 1:length(dcg)) {
 }
 
 colnames(sp.df.all) <- c("CommunityNumber", "NodeName", "Community") # 列名変更
+
+
+#######################
+
+
+# サンプルデータの用意
+g.sample <- graph.full(5) %du% graph.full(5) %du% graph.full(5)  # 完全グラフを3つ作る
+g.sample <- add.edges(g.sample, c(1, 6, 1, 11, 6, 11))  # ノード1,6間、1,11間、6,11間にエッジを追加する
+plot(g.sample, layout = layout.lgl)  # プロットする
+
+
+
+memb <- community.to.membership(g.sample, fc$merges, steps = which.max(fc$modularity) - 1)
+V(g.sample)$color <- rainbow(length(memb$csize))[memb$membership + 1]
+plot(g.sample, layout = layout.fruchterman.reingold, edge.arrow.size = 0.5)
+

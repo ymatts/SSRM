@@ -16,7 +16,9 @@ save_igraph <- function(graph, community, file_name=NULL, format="gexf", save_di
     save_dir <- getwd()
   }
 
-  V(graph)$CommunityNumber <- community$membership
+  com.nums <- as.integer(community$membership)
+  V(graph)$CommunityNumber <- com.nums
+  V(graph)$color <- rainbow(max(com.nums))[com.nums]
 
   file_path <- paste0(save_dir, "/", file_name)
   loaded_packages <- search()

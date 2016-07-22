@@ -22,6 +22,11 @@ SSRM <- R6::R6Class("SSRM",
     mediacy_score_nodes = NULL,
 
   initialize = function(graph, community, nodename=NULL) {
+
+    com.nums <- as.integer(community$membership)
+    V(graph)$CommunityNumber <- com.nums
+    V(graph)$color <- rainbow(max(com.nums))[com.nums]
+
     self$graph <- graph
     self$community <- community
     self$nodename <- nodename
@@ -68,6 +73,10 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
+  plot_community = function(graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
+    result <- SSRM:::plot_community(graph, community, save, file_name, save_dir)
+  },
+
   save_igraph = function(graph=self$graph, community=self$community, file_name=NULL, format="gexf", save_dir=NULL) {
     SSRM:::save_igraph(graph, community, file_name, format, save_dir)
   }
@@ -76,7 +85,7 @@ SSRM <- R6::R6Class("SSRM",
 
 # Static Method
 SSRM$.visualize_func <- function(graph=self$graph) {
-  par(new=T)
+  par(new=F)
 
   cent <- closeness(graph, mode="all", normalized=T)
   closeness_df <- data.frame(ClosenessCentrality=cent)
@@ -90,5 +99,5 @@ SSRM$.visualize_func <- function(graph=self$graph) {
 
   plot(g)
 
-  par(new=T)
+  par(new=F)
 }
