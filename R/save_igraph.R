@@ -7,7 +7,7 @@
 #' @export
 #'
 
-save_igraph <- function(graph, file_name=NULL, format="gexf", save_dir=NULL) {
+save_igraph <- function(graph, community, file_name=NULL, format="gexf", save_dir=NULL) {
   if (is.null(file_name)) {
     stop("Argument of file_name is needed.")
   }
@@ -15,6 +15,8 @@ save_igraph <- function(graph, file_name=NULL, format="gexf", save_dir=NULL) {
   if (is.null(save_dir)) {
     save_dir <- getwd()
   }
+
+  V(graph)$CommunityNumber <- community$membership
 
   file_path <- paste0(save_dir, "/", file_name)
   loaded_packages <- search()

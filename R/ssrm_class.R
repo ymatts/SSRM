@@ -38,8 +38,8 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
-  outermosts = function(visualize=T) {
-    result <- SSRM::outermosts(self$graph, visualize)
+  outermosts = function(graph=self$graph, visualize=T) {
+    result <- SSRM::outermosts(graph, visualize)
     return(result)
   },
 
@@ -68,8 +68,8 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
-  save_igraph = function(file_name=NULL, format="gexf", save_dir=NULL) {
-    SSRM::save_igraph(self$graph, file_name, format, save_dir)
+  save_igraph = function(graph=self$graph, community=self$community, file_name=NULL, format="gexf", save_dir=NULL) {
+    SSRM:::save_igraph(graph, community, file_name, format, save_dir)
   }
   )
 )

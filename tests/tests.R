@@ -43,8 +43,26 @@ g.obj$leader()
 g.obj$outermosts()
 g.obj$mediator()
 g.obj$cbc()
-
 #g.obj$lbc()
-
 g.obj$ds_count()
 g.obj$nbc()
+#g.obj$save_igraph(file="test.gexf")
+
+#######
+
+#http://deta.hateblo.jp/entry/2013/05/08/053707
+g <- simplify(g, remove.multiple=TRUE, remove.loops=TRUE)
+dcg <- decompose.graph(g)
+
+g.cl <- clusters(g)
+
+# 連結ネットワーク単位にコミュニティーと中心性を計算する
+sp.df.all <- c() # コミュニティ分割結果データフレーム
+for (i in 1:length(dcg)) {
+  set.seed(1) # シードを固定
+  sp <- spinglass.community(dcg[[i]]) # 焼きなまし法 グラフラプラシアンを使ってQ値が最大となるような分割を探す
+  sp.df <- cbind(i, as.data.frame(sp$names), as.data.frame(sp$membership)) # データフレーム形式に変換
+  sp.df.all <- rbind(sp.df.all, sp.df) # コミュニティーに結果を追加
+}
+
+colnames(sp.df.all) <- c("CommunityNumber", "NodeName", "Community") # 列名変更
