@@ -21,6 +21,11 @@ SSRM <- R6::R6Class("SSRM",
     nodename = NULL,
     mediacy_score_nodes = NULL,
 
+    OutsiderNode = NULL,
+    LeaderNode = NULL,
+    OutermostNode = NULL,
+    MeditorNode = NULL,
+
   initialize = function(graph, community, nodename=NULL) {
 
     com.nums <- as.integer(community$membership)
@@ -43,8 +48,8 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
-  outermosts = function(graph=self$graph, visualize=T) {
-    result <- SSRM::outermosts(graph, visualize)
+  outermost = function(graph=self$graph, visualize=T) {
+    result <- SSRM::outermost(graph, visualize)
     return(result)
   },
 

@@ -30,13 +30,28 @@ g.obj$plot_community()
 
 g.obj$outsider()
 g.obj$leader()
-g.obj$outermosts()
+g.obj$outermost()
 g.obj$mediator()
 g.obj$cbc()
 #g.obj$lbc()
 g.obj$ds_count()
 g.obj$nbc()
 #g.obj$save_igraph(file="test.gexf")
+
+################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #########
 #http://deta.hateblo.jp/entry/2013/05/08/053707
