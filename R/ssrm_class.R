@@ -82,6 +82,10 @@ SSRM <- R6::R6Class("SSRM",
     result <- SSRM:::plot_community(graph, community, save, file_name, save_dir)
   },
 
+  plot_roles = function(graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
+    result <- SSRM:::plot_roles(graph, community, save, file_name, save_dir)
+  },
+
   save_igraph = function(graph=self$graph, community=self$community, file_name=NULL, format="gexf", save_dir=NULL) {
     SSRM:::save_igraph(graph, community, file_name, format, save_dir)
   }
