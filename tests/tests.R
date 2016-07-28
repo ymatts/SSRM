@@ -28,6 +28,11 @@ plot(dend)
 g.obj <- SSRM$new(g, wc)
 g.obj$plot_community()
 
+g.obj$plot_roles("outsider")
+g.obj$plot_roles("leader")
+g.obj$plot_roles("outermost")
+g.obj$plot_roles("mediator")
+
 g.obj$outsider()
 g.obj$leader()
 g.obj$outermost()

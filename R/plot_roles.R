@@ -22,43 +22,65 @@
 }
 
 
-.color_selector <- function(graph, role) {
+
+#outsider_nodes <- SSRM::outsider(graph, community)
+#leader_nodes <- SSRM::leader(graph, visualize=F)
+#outermost_nodes <- SSRM::outermost(graph, visualize=F)
+#mediator_nodes <- SSRM::mediator(SSRM::mediacy_score(graph, community, nodename=NULL), community)
+
+
+
+.color_selector <- function(role, graph) {
 
   if (role == "outsider") {
-    V(graph)$color <- "#008000"
+    color <- "#008000"
   } else if (role == "leader") {
-    V(graph)$color <- "#0000ff"
+    color <- "#0000ff"
   } else if (role == "outermost") {
-    V(graph)$color <- "#800080"
+    color <- "#800080"
   } else if (role == "mediator") {
-    V(graph)$color <- "#ff0000"
+    color <- "#ff0000"
   } else {
     stop("Such a role doesn't exist!")
   }
 
+  all_node_names <- names(V(graph))
   V(graph)$color <- rep(color, length(all_node_names))
 
   #Silver
-  V(graph)$color[vertex_attr(graph)[role_node] == 0] <- "#c0c0c0"
+  V(graph)$color[vertex_attr(graph)[role_nodes] == 0] <- "#c0c0c0"
 }
 
 
-plot_roles <- function(graph, community, file_name=NULL, save_dir=NULL) {
+plot_roles <- function(role, graph, community, save=F, file_name=NULL, save_dir=NULL) {
 
   outsider_nodes <- SSRM::outsider(graph, community)
   leader_nodes <- SSRM::leader(graph, visualize=F)
   outermost_nodes <- SSRM::outermost(graph, visualize=F)
   mediator_nodes <- SSRM::mediator(SSRM::mediacy_score(graph, community, nodename=NULL), community)
 
-  V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
-  V(graph)$LeaderNode <- .attr_dipatcher(graph, leader_nodes)
-  V(graph)$OutermostNode <- .attr_dipatcher(graph, outermost_nodes)
-  V(graph)$MeditorNode <- .attr_dipatcher(graph, mediator_nodes)
+  if (is.null(V(graph)$OutsiderNode)) {
+    V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
+  }
 
-  graph$color <- .color_selector(graph, "outsider")
-  graph$color <- .color_selector(graph, "leader")
-  graph$color <- .color_selector(graph, "outermost")
-  graph$color <- .color_selector(graph, "mediator")
+  if (is.null(V(graph)$OutsiderNode)) {
+    V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
+  }
+
+  if (is.null(V(graph)$LedaerNode)) {
+    V(graph)$LeaderNode <- .attr_dipatcher(graph, leader_nodes)
+  }
+
+  if (is.null(V(graph)$OutermostNode)) {
+    V(graph)$OutermostNode <- .attr_dipatcher(graph, outermost_nodes)
+  }
+
+  if (is.null(V(graph)$MeditorNode)) {
+    V(graph)$OutsiderNode <- .attr_dipatcher(graph, mediator_nodes)
+  }
+
+  graph$color <- .color_selector(role, graph)
+
 
   par(new=F)
 
@@ -66,6 +88,7 @@ plot_roles <- function(graph, community, file_name=NULL, save_dir=NULL) {
     pdf(filename=paste0(save_dir, "/", file_name))
   }
 
+  #Roleの数値も表示するように実装を加える
   plot(graph, vertex.size=10, #ノードの大きさ
      vertex.shape="circle", #ノードの形
      vertex.label=V(graph)$name, #ノード属性nameをノードラベルにする。

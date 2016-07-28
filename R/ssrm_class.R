@@ -35,7 +35,6 @@ SSRM <- R6::R6Class("SSRM",
     self$graph <- graph
     self$community <- community
     self$nodename <- nodename
-    self$mediacy_score_nodes <- SSRM::mediacy_score(graph, community, nodename)
   },
 
   outsider = function(graph=self$graph, community=self$community) {
@@ -54,6 +53,10 @@ SSRM <- R6::R6Class("SSRM",
   },
 
   mediator = function(mediacy_score_nodes=self$mediacy_score_nodes, community=self$community) {
+    if (is.null(self$mediacy_score_nodes)) {
+      self$mediacy_score_nodes <- SSRM::mediacy_score(graph, community, nodename)
+      mediacy_score_nodes <- self$mediacy_score_nodes
+    }
     result <- SSRM::mediator(mediacy_score_nodes, community)
     return(result)
   },
@@ -78,17 +81,31 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
+  role_register = function(graph=self$graph, community=self$community) {
+    igraph_obj <- SSRM::role_register(graph, community)
+
+    self$OutsiderNode <- V(igraph_obj)$OutsiderNode
+    self$LeaderNode <- V(igraph_obj)$LeaderNode
+    self$OutermostNode <- V(igraph_obj)$OutermostNode
+    self$MeditorNode <- V(igraph_obj)$MeditorNode
+  },
+
   plot_community = function(graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
     result <- SSRM:::plot_community(graph, community, save, file_name, save_dir)
   },
 
-  plot_roles = function(graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
-    result <- SSRM:::plot_roles(graph, community, save, file_name, save_dir)
+  plot_roles = function(role, graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
+    result <- SSRM:::plot_roles(role, graph, community, save, file_name, save_dir)
   },
 
   save_igraph = function(graph=self$graph, community=self$community, file_name=NULL, format="gexf", save_dir=NULL) {
     SSRM:::save_igraph(graph, community, file_name, format, save_dir)
-  }
+  },
+
+  mediacy_score = function(graph, community, nodename=NULL) {
+   result <- SSRM::mediacy_score(graph=self$graph, community=self$community, nodename)
+   return(result)
+   }
   )
 )
 
