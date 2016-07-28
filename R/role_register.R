@@ -8,6 +8,42 @@
 #'
 #'
 
+role_register <- function(graph, community, role=NULL) {
+  if (!is.null(role)) {
+    if (role == "outsider") {
+      outsider_nodes <- SSRM::outsider(graph, community)
+      V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
+    }
+
+    if (role == "outsider") {
+      leader_nodes <- SSRM::leader(graph, visualize=F)
+      V(graph)$LeaderNode <- .attr_dipatcher(graph, leader_nodes)
+    }
+
+    if (role == "outermost") {
+      outermost_nodes <- SSRM::outermost(graph, visualize=F)
+      V(graph)$OutermostNode <- .attr_dipatcher(graph, outermost_nodes)
+    }
+
+    if (role == "mediator") {
+      mediator_nodes <- SSRM::mediator(SSRM::mediacy_score(graph, community, nodename=NULL), community)
+      V(graph)$MediatorNode <- .attr_dipatcher(graph, mediator_nodes)
+    }
+  } else {
+    outsider_nodes <- SSRM::outsider(graph, community)
+    leader_nodes <- SSRM::leader(graph, visualize=F)
+    outermost_nodes <- SSRM::outermost(graph, visualize=F)
+    mediator_nodes <- SSRM::mediator(SSRM::mediacy_score(graph, community, nodename=NULL), community)
+
+    V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
+    V(graph)$LeaderNode <- .attr_dipatcher(graph, leader_nodes)
+    V(graph)$OutermostNode <- .attr_dipatcher(graph, outermost_nodes)
+    V(graph)$MediatorNode <- .attr_dipatcher(graph, mediator_nodes)
+  }
+  return(invisible(graph))
+}
+
+
 .attr_dipatcher <- function(graph, role_nodes) {
   all_node_names <- names(V(graph))
   zero_nodes <- vector("integer", length(all_node_names))
@@ -19,29 +55,4 @@
     ix <- ix + 1
   }
   return(zero_nodes)
-}
-
-
-role_register <- function(graph, community) {
-
-  if (is.null(V(graph)$OutsiderNode)) {
-    outsider_nodes <- SSRM::outsider(graph, community)
-    V(graph)$OutsiderNode <- .attr_dipatcher(graph, outsider_nodes)
-  }
-
-  if (is.null(V(graph)$LedaerNode)) {
-    leader_nodes <- SSRM::leader(graph, visualize=F)
-    V(graph)$LeaderNode <- .attr_dipatcher(graph, leader_nodes)
-  }
-
-  if (is.null(V(graph)$OutermostNode)) {
-    outermost_nodes <- SSRM::outermost(graph, visualize=F)
-    V(graph)$OutermostNode <- .attr_dipatcher(graph, outermost_nodes)
-  }
-
-  if (is.null(V(graph)$MeditorNode)) {
-    mediator_nodes <- SSRM::mediator(SSRM::mediacy_score(graph, community, nodename=NULL), community)
-    V(graph)$MediatorNode <- .attr_dipatcher(graph, mediator_nodes)
-  }
-  return(graph)
 }

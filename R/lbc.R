@@ -24,7 +24,7 @@ lbc <- function(graph, community, nodename=NULL) {
   leader.num <- length(leader.names)
 
   if (leader.num == 0) {
-    stop("Leaders don't exist.")
+    stop("Leaders don't exist!")
   }
 
   leader.comb.names <- combinations(leader.num, 2, leader.names)

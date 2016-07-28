@@ -6,6 +6,8 @@
 #' @export
 #'
 
+set.seed(20160728)
+
 SSRM <- R6::R6Class("SSRM",
   private = list(
     dispatcher = function(function_name, graph, community, nodename) {
@@ -81,21 +83,24 @@ SSRM <- R6::R6Class("SSRM",
     return(result)
   },
 
-  role_register = function(graph=self$graph, community=self$community) {
-    igraph_obj <- SSRM::role_register(graph, community)
+  role_register = function(graph=self$graph, community=self$community, role_name=NULL) {
+    igraph_obj <- SSRM::role_register(graph, community, role_name)
+    self$graph <- igraph_obj
 
     self$OutsiderNode <- V(igraph_obj)$OutsiderNode
     self$LeaderNode <- V(igraph_obj)$LeaderNode
     self$OutermostNode <- V(igraph_obj)$OutermostNode
     self$MeditorNode <- V(igraph_obj)$MeditorNode
+
+    return(invisible(igraph_obj))
   },
 
   plot_community = function(graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
-    result <- SSRM:::plot_community(graph, community, save, file_name, save_dir)
+    SSRM:::plot_community(graph, community, save, file_name, save_dir)
   },
 
   plot_roles = function(role, graph=self$graph, community=self$community, save=F, file_name=NULL, save_dir=NULL) {
-    result <- SSRM:::plot_roles(role, graph, community, save, file_name, save_dir)
+    SSRM:::plot_roles(role, graph, community, save, file_name, save_dir)
   },
 
   save_igraph = function(graph=self$graph, community=self$community, file_name=NULL, format="gexf", save_dir=NULL) {
